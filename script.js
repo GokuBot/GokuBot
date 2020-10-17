@@ -1,3 +1,5 @@
+const { func } = require("prop-types");
+
 const recognition = new webkitSpeechRecognition();
 recognition.continous = true;
 recognition.lang = "en-US";
@@ -8,6 +10,9 @@ let speech = new SpeechSynthesisUtterance();
 const startBtn = document.querySelector("#startBtn");
 const speakBtn = document.querySelector("#speakBtn");
 
+function greeting() {
+  return "HELLO FROM GOKU";
+}
 speakBtn.addEventListener("click", () => {
   recognition.start();
 });
@@ -19,6 +24,11 @@ recognition.onresult = (e) => {
   //   window.speechSynthesis.speak(speech);
 
   const arr = str.split(" ");
+
+  if (arr.includes("hello")) {
+    speech.text = "Hello from goku";
+    window.speechSynthesis.speak(speech);
+  }
   if (arr.includes("increase")) {
     speech.text = `Font Size Increased`;
     window.speechSynthesis.speak(speech);
