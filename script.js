@@ -1,5 +1,3 @@
-const { func } = require("prop-types");
-
 const recognition = new webkitSpeechRecognition();
 recognition.continous = true;
 recognition.lang = "en-US";
