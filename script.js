@@ -18,6 +18,7 @@ function greetingMessage(){
   // random message from the messages array return
   return messages[index];
 
+
 }
 speakBtn.addEventListener("click", () => {
   recognition.start();

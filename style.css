@@ -1,0 +1,34 @@
+#speakBtn {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: white;
+    background: teal;
+    padding: 1rem 3rem;
+    border-radius: 3rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    outline: none;
+
+
+}
+
+#speakBtn:hover {
+    background-color: black;
+    color: white;
+
+}
+
+#startBtn {
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 20%;
+    font-size: 1rem;
+    color: black;
+    background: grey;
+    padding: 1rem 3rem;
+    border-radius: 3rem;
+}
