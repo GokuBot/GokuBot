@@ -8,18 +8,37 @@ let speech = new SpeechSynthesisUtterance();
 const startBtn = document.querySelector("#startBtn");
 const speakBtn = document.querySelector("#speakBtn");
 
-
 // random greeting message returns
-function greetingMessage(){
+function greetingMessage() {
   // messages array declared
-  let messages = ["hello sir","whatsup sir","howz your day maam","jai shree ram","jai mata di"];
+  let messages = [
+    "hello sir",
+    "whatsup sir",
+    "howz your day maam",
+    "jai shree ram",
+    "jai mata di",
+  ];
   // random index generated of messages array
-  let index = Math.floor(Math.random()*messages.length);
+  let index = Math.floor(Math.random() * messages.length);
   // random message from the messages array return
   return messages[index];
-
-
 }
+
+function getCurrentDay() {
+  let days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+  let newDate = new Date();
+  let index = newDate.getDay();
+  return days[index];
+}
+
 speakBtn.addEventListener("click", () => {
   recognition.start();
 });
@@ -32,14 +51,23 @@ recognition.onresult = (e) => {
 
   const arr = str.split(" ");
 
-
-// if we speak "hello" then we fetch a random greeting message from thr greetingMessage function 
-  if (arr.includes("hello")){
+  // if we speak "hello" then we fetch a random greeting message from thr greetingMessage function
+  if (arr.includes("hello")) {
     // set the text to the greetingMessage
-    speech.text = greetingMessage()
+    speech.text = greetingMessage();
     // speak the random greeting message
     window.speechSynthesis.speak(speech);
   }
+  if (
+    arr.includes("currentday") ||
+    (arr.includes("current") && arr.includes("day"))
+  ) {
+    let currentDay = getCurrentDay();
+    let currentDayText = "today is " + currentDay;
+    speech.text = currentDayText;
+    window.speechSynthesis.speak(speech);
+  }
+
   if (arr.includes("increase")) {
     speech.text = `Font Size Increased`;
     window.speechSynthesis.speak(speech);
