@@ -19,8 +19,6 @@ let NavItem = `<li class="nav-item">
 //   <a class="nav-link" href="#">SampleLink</a>
 // </li>
 
-<<<<<<< Updated upstream
-=======
 // </ul>`;
 // const startBtn = document.querySelector("#startBtn");
 const speakBtn = document.querySelector("#speakBtn");
@@ -32,7 +30,6 @@ function addNavbar() {
   // NavBar.firstElementChild.classList.add("justify-content-center");
 }
 
->>>>>>> Stashed changes
 function greeting() {
   return "HELLO FROM GOKU";
 }
