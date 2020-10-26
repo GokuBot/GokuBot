@@ -3,8 +3,36 @@ recognition.continous = true;
 recognition.lang = "en-US";
 recognition.interimResults = false;
 recognition.maxAlternatives = 2;
+recognition.rate = 1.5;
 let speech = new SpeechSynthesisUtterance();
+let NavItem = `<li class="nav-item">
+<a class="nav-link active" href="#">SampleLink</a>
+</li>`;
+// let NavText = `<ul class="nav">
+// <li class="nav-item">
+//   <a class="nav-link active" href="#">SampleLink</a>
+// </li>
+// <li class="nav-item">
+//   <a class="nav-link" href="#">SampleLink</a>
+// </li>
+// <li class="nav-item">
+//   <a class="nav-link" href="#">SampleLink</a>
+// </li>
 
+<<<<<<< Updated upstream
+=======
+// </ul>`;
+// const startBtn = document.querySelector("#startBtn");
+const speakBtn = document.querySelector("#speakBtn");
+
+function addNavbar() {
+  // let NavBar = document.createElement("Navbar");
+  // NavBar.innerHTML = NavText;
+  // document.querySelector(".container").appendChild(NavBar);
+  // NavBar.firstElementChild.classList.add("justify-content-center");
+}
+
+>>>>>>> Stashed changes
 function greeting() {
   return "HELLO FROM GOKU";
 }
@@ -28,24 +56,15 @@ recognition.onresult = (e) => {
     speech.text = greeting();
     window.speechSynthesis.speak(speech);
   }
-  if (arr.includes("increase")) {
-    speech.text = `Font Size Increased`;
+  if (arr.includes("header") && arr.includes("create")) {
+    speech.text = "header created successfully";
     window.speechSynthesis.speak(speech);
-    startBtn.style.fontSize = "3rem";
-  }
-  if (arr.includes("decrease")) {
-    speech.text = `Font Size Decreased`;
-    window.speechSynthesis.speak(speech);
-    startBtn.style.fontSize = "1rem";
-  }
-  if (arr.includes("red")) {
-    speech.text = `Color changed to Red`;
-    window.speechSynthesis.speak(speech);
-    startBtn.style.color = "red";
-  }
-  if (arr.includes("blue")) {
-    speech.text = `Color changed to Blue`;
-    window.speechSynthesis.speak(speech);
-    startBtn.style.color = "blue";
+    let navBar = document.createElement("ul");
+    navBar.classList.add("nav");
+    navBar.classList.add("justify-content-center");
+    let navElements = parseInt(arr[arr.length - 2]);
+    for (let i = 0; i < navElements; i++) {
+      navBar.appendChild(NavItem);
+    }
   }
 };
