@@ -1,41 +1,65 @@
 /* a,a:focus,a:active{
     text-decoration: none !important
 } */
+* {
 
+    box-sizing: border-box;
+}
 
+.container-fluid {
+    padding: 0 !important;
+    margin: 0 !important;
 
+}
 
-#speakBtn {
+.jumbotron {
+    width: 70%;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+}
+
+.hero {
+    height: 100vh;
+    background-size: cover;
+
+}
+
+.nav {
+    padding-top: 2rem;
+
+}
+
+#speakBtn {
+    position: absolute;
+    bottom: 10%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     font-size: 2rem;
-    color: white;
-    background: teal;
+    /* color: white; */
+    /* background: teal; */
     padding: 1rem 3rem;
     border-radius: 3rem;
     cursor: pointer;
-    transition: 0.3s ease-in-out;
-    outline: none;
+    transition: all 0.3s ease-in-out;
+    outline: none !important;
+    border: none !important;
+    background-color: transparent;
 
 
 }
 
-#speakBtn:hover {
-    background-color: black;
-    color: white;
+#speakBtn i {
 
-}
-
-#startBtn {
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    top: 20%;
-    font-size: 1rem;
     color: black;
-    background: grey;
-    padding: 1rem 3rem;
-    border-radius: 3rem;
+    font-size: 3rem;
+
+    transition: all 0.3s ease-in-out;
+}
+
+#speakBtn:hover i {
+    font-size: 4rem;
+    color: #34B334;
+
 }
