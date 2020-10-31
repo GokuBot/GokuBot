@@ -1,22 +1,11 @@
-
-var recognition = new webkitSpeechRecognition();
-
+const recognition = new webkitSpeechRecognition();
 recognition.continous = true;
 recognition.lang = "en-US";
-
 recognition.interimResults = false;
 recognition.maxAlternatives = 2;
-recognition.rate = 1.1;
-
 let speech = new SpeechSynthesisUtterance();
-let allVoices;
-window.speechSynthesis.onvoiceschanged = function () {
-  allVoices = window.speechSynthesis.getVoices();
 
-  // 0 -> jarvis voice
-  speech.voice = allVoices[0];
-};
-let speechResult;
+const startBtn = document.querySelector("#startBtn");
 const speakBtn = document.querySelector("#speakBtn");
 speakBtn.addEventListener("click", () => {
   recognition.start();
@@ -30,29 +19,33 @@ function botSpeak(speechText) {
 let gender = "Sir";
 // let gender = "Mam";
 
-let Navbar, logo;
+let Navbar,
+  logo,
+  isLogoAdded = false;
+let collapseButton = `<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+`;
 
-let emptyNav = `<nav class="navbar navbar-light bg-light"></nav>`;
 let navLink = `<li class="nav-item">
 <a class="nav-link" href="#">Link</a>
 </li>`;
-
+let searchBar = `
+<form class="form-inline my-2 my-lg-0">
+  <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+  <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+</form>`;
 let mainSection = document.querySelector(".mainSection");
-
 
 // random greeting message returns
 function greetingMessage() {
   // messages array declared
   let messages = [
-
-    `Hello ${gender}, How may i help u ? `,
-    `Good morning ${gender}, I hope you are having a wonderful day`,
-    `Good morning ${gender}, I hope you enjoyed your weekend`,
-    `Good morning ${gender}, I hope you are having a great week`,
-    `Good morning ${gender}, I hope you are doing well`,
-    `Good morning ${gender}, I hope you have coffee already`,
-    `Good morning ${gender}, I hope you have your attendance more than 75%`,
-
+    "hello sir",
+    "whatsup sir",
+    "howz your day maam",
+    "jai shree ram",
+    "jai mata di",
   ];
   // random index generated of messages array
   let index = Math.floor(Math.random() * messages.length);
@@ -60,15 +53,13 @@ function greetingMessage() {
   return messages[index];
 }
 
-
 // </ul>`;
 // const startBtn = document.querySelector("#startBtn");
-const speakBtn = document.querySelector("#speakBtn");
+//const speakBtn = document.querySelector("#speakBtn");
 
 function check(text) {
   return speechResult.includes(text);
 }
-
 
 function getCurrentDay() {
   let days = [
@@ -118,10 +109,6 @@ function returnNumber(numberText, choice) {
   return index;
 }
 
-speakBtn.addEventListener("click", () => {
-  recognition.start();
-});
-
 recognition.onresult = (e) => {
   const str = e.results[0][0]["transcript"];
   console.log(str);
@@ -151,15 +138,21 @@ recognition.onresult = (e) => {
   }
   //  ADD BRAND LOGO
   if (check("add")) {
-    if (check("logo") && check("brand")) {
+    if (check("logo") && check("brand") && speechResult.length === 3) {
+      if (isLogoAdded === true) {
+        botSpeak("Logo already added");
+        return;
+      }
+      isLogoAdded = true;
       logo = document.createElement("a");
       logo.classList.add("navbar-brand");
       let logoImg = document.createElement("img");
-      logoImg.src = "../images/logo.png";
+      logoImg.src = "../images/LogoImage.png";
       logoImg.setAttribute("height", "80px");
       // logoImg.setAttribute("width", "50px");
       logo.appendChild(logoImg);
       Navbar.appendChild(logo);
+      Navbar.innerHTML += collapseButton;
       botSpeak("Logo added Successfully");
     }
     // ADD LOGO TEXT
@@ -171,33 +164,34 @@ recognition.onresult = (e) => {
         );
       } else {
         for (let i = 0; i < logoText.length; i++) {
-          logo.innerHTML += logoText[i];
+          logo.title += logoText[i];
         }
         botSpeak("logo text added successfully");
       }
       console.log(logoText);
     }
+    if (check("header") && check("links")) {
+      let linksNumber = speechResult[1];
+      let navElements;
+      if (isNaN(linksNumber)) {
+        navElements = returnNumber(linksNumber, 1);
+      } else {
+        navElements = parseInt(linksNumber);
+      }
+      let collapseNavBar = document.createElement("div");
+      collapseNavBar.classList.add("collapse");
+      collapseNavBar.classList.add("navbar-collapse");
+      let navList = document.createElement("ul");
+      navList.classList.add("navbar-nav");
+      navList.classList.add("mr-auto");
+      for (let i = 0; i < navElements; i++) {
+        navList.innerHTML += navLink;
+      }
+      collapseNavBar.appendChild(navList);
+      Navbar.appendChild(collapseNavBar);
+    }
+    if (check("search") && check("bar")) {
+      collapseNavBar.innerHTML += searchBar;
+    }
   }
-
-  //   window.speechSynthesis.speak(speech);
-
-  const arr = str.split(" ");
-
-  // try {
-  // if we speak "hello" then we fetch a random greeting message from thr greetingMessage function
-  if (arr.includes("hello")) {
-    // set the text to the greetingMessage
-
-    // speak the random greeting message
-    botSpeak(greetingMessage());
-  }
-  if (
-    arr.includes("currentday") ||
-    (arr.includes("current") && arr.includes("day"))
-  ) {
-    let currentDay = getCurrentDay();
-    let currentDayText = "today is " + currentDay;
-    botSpeak(currentDayText);
-  }
-
-}
+};
