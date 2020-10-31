@@ -169,8 +169,9 @@ recognition.onresult = (e) => {
         );
       } else {
         for (let i = 0; i < logoText.length; i++) {
-          logo.title += logoText[i];
+          document.querySelector(".navbar-brand").innerHTML += logoText[i];
         }
+        console.log(logo);
         botSpeak("logo text added successfully");
       }
       console.log(logoText);
