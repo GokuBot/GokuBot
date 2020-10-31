@@ -1,6 +1,4 @@
-/* a,a:focus,a:active{
-    text-decoration: none !important
-} */
+
 * {
 
     box-sizing: border-box;
@@ -11,6 +9,34 @@
     margin: 0 !important;
 
 }
+
+
+/* MAIN SECTION  */
+.mainSection {
+    height: 100vh;
+    /* background-color: aqua; */
+}
+
+.navbar {
+    height: 100px;
+    padding: 0 60px !important;
+    background-color: grey !important;
+}
+
+.jumbotron {
+    width: 70%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 2rem;
+    color: white;
+    background: teal;
+    padding: 1rem 2rem;
+    border-radius: 3rem;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+    outline: none;
 
 .jumbotron {
     width: 70%;
@@ -48,7 +74,15 @@
     background-color: transparent;
 
 
+
 }
+
+#speakBtn:hover {
+    background-color: black;
+    color: white;
+
+}
+
 
 #speakBtn i {
 

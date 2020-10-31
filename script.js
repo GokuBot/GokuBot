@@ -1,31 +1,74 @@
-const recognition = new webkitSpeechRecognition();
+
+var recognition = new webkitSpeechRecognition();
+
 recognition.continous = true;
 recognition.lang = "en-US";
+
 recognition.interimResults = false;
 recognition.maxAlternatives = 2;
-recognition.rate = 1.5;
-let speech = new SpeechSynthesisUtterance();
-let navBar, heroSection;
-const speakBtn = document.querySelector("#speakBtn");
+recognition.rate = 1.1;
 
-let NavItem = `<li class="nav-item">
-<a class="nav-link active" href="#">SampleLink</a>
+let speech = new SpeechSynthesisUtterance();
+let allVoices;
+window.speechSynthesis.onvoiceschanged = function () {
+  allVoices = window.speechSynthesis.getVoices();
+
+  // 0 -> jarvis voice
+  speech.voice = allVoices[0];
+};
+let speechResult;
+const speakBtn = document.querySelector("#speakBtn");
+speakBtn.addEventListener("click", () => {
+  recognition.start();
+});
+
+function botSpeak(speechText) {
+  speech.text = speechText;
+  window.speechSynthesis.speak(speech);
+}
+
+let gender = "Sir";
+// let gender = "Mam";
+
+let Navbar, logo;
+
+let emptyNav = `<nav class="navbar navbar-light bg-light"></nav>`;
+let navLink = `<li class="nav-item">
+<a class="nav-link" href="#">Link</a>
 </li>`;
+
+let mainSection = document.querySelector(".mainSection");
+
+
 // random greeting message returns
 function greetingMessage() {
   // messages array declared
   let messages = [
-    "hello sir",
-    "whatsup sir",
-    "howz your day maam",
-    "jai shree ram",
-    "jai mata di",
+
+    `Hello ${gender}, How may i help u ? `,
+    `Good morning ${gender}, I hope you are having a wonderful day`,
+    `Good morning ${gender}, I hope you enjoyed your weekend`,
+    `Good morning ${gender}, I hope you are having a great week`,
+    `Good morning ${gender}, I hope you are doing well`,
+    `Good morning ${gender}, I hope you have coffee already`,
+    `Good morning ${gender}, I hope you have your attendance more than 75%`,
+
   ];
   // random index generated of messages array
   let index = Math.floor(Math.random() * messages.length);
   // random message from the messages array return
   return messages[index];
 }
+
+
+// </ul>`;
+// const startBtn = document.querySelector("#startBtn");
+const speakBtn = document.querySelector("#speakBtn");
+
+function check(text) {
+  return speechResult.includes(text);
+}
+
 
 function getCurrentDay() {
   let days = [
@@ -83,6 +126,59 @@ recognition.onresult = (e) => {
   const str = e.results[0][0]["transcript"];
   console.log(str);
   speech.text = str;
+
+  speechResult = str.split(" ");
+  // STARTING COMMANDS
+  if (check("hello")) {
+    botSpeak(greetingMessage());
+  }
+  if (check("current") && check("day")) {
+    botSpeak(`Today is ${getCurrentDay()}`);
+  }
+
+  //HEADER COMMANDS
+
+  // CREATE HEADER / NAVBAR
+  if (check("header") || check("navbar")) {
+    if (check("create")) {
+      Navbar = document.createElement("nav");
+      Navbar.classList.add("navbar");
+
+      mainSection.appendChild(Navbar);
+      let navName = check("header") ? "header" : "navbar";
+      botSpeak(`${navName} created Successfully`);
+    }
+  }
+  //  ADD BRAND LOGO
+  if (check("add")) {
+    if (check("logo") && check("brand")) {
+      logo = document.createElement("a");
+      logo.classList.add("navbar-brand");
+      let logoImg = document.createElement("img");
+      logoImg.src = "../images/logo.png";
+      logoImg.setAttribute("height", "80px");
+      // logoImg.setAttribute("width", "50px");
+      logo.appendChild(logoImg);
+      Navbar.appendChild(logo);
+      botSpeak("Logo added Successfully");
+    }
+    // ADD LOGO TEXT
+    if (check("logo") && check("text")) {
+      var logoText = speechResult.slice(4, speechResult.length);
+      if (logoText.length > 2 || logoText == 0) {
+        botSpeak(
+          "Sorry sir.Please provide logo text of minimum 1 word or maximum 2 words"
+        );
+      } else {
+        for (let i = 0; i < logoText.length; i++) {
+          logo.innerHTML += logoText[i];
+        }
+        botSpeak("logo text added successfully");
+      }
+      console.log(logoText);
+    }
+  }
+
   //   window.speechSynthesis.speak(speech);
 
   const arr = str.split(" ");
@@ -104,78 +200,4 @@ recognition.onresult = (e) => {
     botSpeak(currentDayText);
   }
 
-  if (arr.includes("header") && arr.includes("create")) {
-    let headerText = `Header added successfully with  ${
-      arr[arr.length - 2]
-    } links`;
-    botSpeak(headerText);
-    navBar = document.createElement("ul");
-    navBar.classList.add("nav");
-    navBar.classList.add("justify-content-center");
-    let navElements = returnNumber(arr[arr.length - 2], 0);
-    for (let i = 0; i < navElements; i++) {
-      navBar.innerHTML += NavItem;
-    }
-    // create hero section element
-    heroSection = document.createElement("div");
-
-    heroSection.classList.add("hero");
-    document.querySelector(".container-fluid").appendChild(heroSection);
-    heroSection.appendChild(navBar);
-  }
-  // change header link text of number two to contact
-  if (arr.includes("change") && arr.includes("header")) {
-    if (arr.includes("text")) {
-      let linkNumber = returnNumber(arr[arr.length - 3], 1);
-      navBar.children[linkNumber].children[0].innerText = arr[arr.length - 1];
-    }
-    // change header link color of all to red
-    else if (arr.includes("colour") && arr.includes("all")) {
-      for (let i = 0; i < navBar.children.length; i++) {
-        navBar.children[i].children[0].style.color = arr[arr.length - 1];
-      }
-    }
-    //change header background colour to blue
-    else if (arr.includes("background")) {
-      navBar.style.backgroundColor = arr[arr.length - 1];
-    }
-  }
-  if (arr.includes("background") && arr.includes("change")) {
-    heroSection.style.backgroundImage = "url('../images/heroBG.png')";
-  }
-  // create title section  -------   with button
-  if (
-    arr.includes("create") &&
-    arr.includes("title") &&
-    arr.includes("section")
-  ) {
-    if (arr.includes("button")) {
-      heroSection.innerHTML += `<div class="jumbotron">
-      <h1 class="display-4">Sample Heading</h1>
-      <p class="lead">sample paragraph</p>
-      <hr class="my-4">
-      <p>sample text related to button</p>
-      <p class="lead">
-        <a class="btn btn-primary btn-lg" href="#" role="button">Sample Button</a>
-      </p>
-    </div>`;
-    } else {
-      heroSection.innerHTML += `<div class="jumbotron jumbotron-fluid">
-      <div class="container">
-        <h1 class="display-4">Sample Heading</h1>
-        <p class="lead">sample paragraph</p>
-      </div>
-    </div>`;
-    }
-  }
-
-  // else {
-  //   speech.text='sorry i dont understand';
-  // window.speechSynthesis.speak(speech)
-  // }
-  // } catch (error) {
-  //   speech.text = "sorry i dont understand";
-  //   window.speechSynthesis.speak(speech);
-  //   console.log("catch is executed");
-  // }
-};
+}
