@@ -1,3 +1,4 @@
+
 var recognition = new webkitSpeechRecognition();
 
 recognition.continous = true;
@@ -38,10 +39,12 @@ let navLink = `<li class="nav-item">
 
 let mainSection = document.querySelector(".mainSection");
 
+
 // random greeting message returns
 function greetingMessage() {
   // messages array declared
   let messages = [
+
     `Hello ${gender}, How may i help u ? `,
     `Good morning ${gender}, I hope you are having a wonderful day`,
     `Good morning ${gender}, I hope you enjoyed your weekend`,
@@ -49,12 +52,14 @@ function greetingMessage() {
     `Good morning ${gender}, I hope you are doing well`,
     `Good morning ${gender}, I hope you have coffee already`,
     `Good morning ${gender}, I hope you have your attendance more than 75%`,
+
   ];
   // random index generated of messages array
   let index = Math.floor(Math.random() * messages.length);
   // random message from the messages array return
   return messages[index];
 }
+
 
 // </ul>`;
 // const startBtn = document.querySelector("#startBtn");
@@ -64,10 +69,64 @@ function check(text) {
   return speechResult.includes(text);
 }
 
+
+function getCurrentDay() {
+  let days = [
+    "sunday",
+    "monday",
+    "tuesday",
+    "wednesday",
+    "thursday",
+    "friday",
+    "saturday",
+  ];
+  let newDate = new Date();
+  let index = newDate.getDay();
+  return days[index];
+}
+
+function botSpeak(speechText) {
+  speech.text = speechText;
+  window.speechSynthesis.speak(speech);
+}
+// choice = 1 : 1 based indexing
+// choice = 0 : 0 based indexing
+function returnNumber(numberText, choice) {
+  if (numberText === "to") {
+    if (choice == 1) {
+      return 1;
+    }
+    return 2;
+  }
+  let arr = [
+    "zero",
+    "one",
+    "two",
+    "three",
+    "four",
+    "five",
+    "six",
+    "seven",
+    "eight",
+    "nine",
+  ];
+  let index = arr.indexOf(numberText);
+  if (choice == 1) {
+    index--;
+  }
+
+  return index;
+}
+
+speakBtn.addEventListener("click", () => {
+  recognition.start();
+});
+
 recognition.onresult = (e) => {
   const str = e.results[0][0]["transcript"];
   console.log(str);
   speech.text = str;
+
   speechResult = str.split(" ");
   // STARTING COMMANDS
   if (check("hello")) {
@@ -119,4 +178,26 @@ recognition.onresult = (e) => {
       console.log(logoText);
     }
   }
-};
+
+  //   window.speechSynthesis.speak(speech);
+
+  const arr = str.split(" ");
+
+  // try {
+  // if we speak "hello" then we fetch a random greeting message from thr greetingMessage function
+  if (arr.includes("hello")) {
+    // set the text to the greetingMessage
+
+    // speak the random greeting message
+    botSpeak(greetingMessage());
+  }
+  if (
+    arr.includes("currentday") ||
+    (arr.includes("current") && arr.includes("day"))
+  ) {
+    let currentDay = getCurrentDay();
+    let currentDayText = "today is " + currentDay;
+    botSpeak(currentDayText);
+  }
+
+}
