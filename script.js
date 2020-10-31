@@ -5,7 +5,14 @@ recognition.interimResults = false;
 recognition.maxAlternatives = 2;
 let speech = new SpeechSynthesisUtterance();
 
-const startBtn = document.querySelector("#startBtn");
+let allVoices;
+window.speechSynthesis.onvoiceschanged = function () {
+  allVoices = window.speechSynthesis.getVoices();
+
+  // 0 -> jarvis voice
+  speech.voice = allVoices[0];
+};
+let speechResult;
 const speakBtn = document.querySelector("#speakBtn");
 speakBtn.addEventListener("click", () => {
   recognition.start();
@@ -41,21 +48,19 @@ let mainSection = document.querySelector(".mainSection");
 function greetingMessage() {
   // messages array declared
   let messages = [
-    "hello sir",
-    "whatsup sir",
-    "howz your day maam",
-    "jai shree ram",
-    "jai mata di",
+    `Hello ${gender}, How may i help u ? `,
+    `Good morning ${gender}, I hope you are having a wonderful day`,
+    `Good morning ${gender}, I hope you enjoyed your weekend`,
+    `Good morning ${gender}, I hope you are having a great week`,
+    `Good morning ${gender}, I hope you are doing well`,
+    `Good morning ${gender}, I hope you have coffee already`,
+    `Good morning ${gender}, I hope you have your attendance more than 75%`,
   ];
   // random index generated of messages array
   let index = Math.floor(Math.random() * messages.length);
   // random message from the messages array return
   return messages[index];
 }
-
-// </ul>`;
-// const startBtn = document.querySelector("#startBtn");
-//const speakBtn = document.querySelector("#speakBtn");
 
 function check(text) {
   return speechResult.includes(text);
