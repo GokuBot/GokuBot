@@ -27,9 +27,10 @@ let gender = "Sir";
 // let gender = "Mam";
 
 let Navbar,
-  logo, logoImageSize = '80px';
+  logo,
+  logoImageSize = "80px";
 isLogoAdded = false;
-let collapseNavBar
+let collapseNavBar;
 let collapseButton = `<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
@@ -81,7 +82,11 @@ function getCurrentDay() {
   let index = newDate.getDay();
   return days[index];
 }
-
+function returnCapitalized(text) {
+  return text
+    .toLowerCase()
+    .replace(/^[a-zA-z]|\s(.)/gi, (L) => L.toUpperCase());
+}
 function botSpeak(speechText) {
   speech.text = speechText;
   window.speechSynthesis.speak(speech);
@@ -90,10 +95,16 @@ function botSpeak(speechText) {
 // choice = 0 : 0 based indexing
 function returnNumber(numberText, choice) {
   if (numberText === "to") {
-    if (choice == 1) {
+    if (choice == 0) {
       return 1;
     }
     return 2;
+  }
+  if (numberText === "for") {
+    if (choice === 1) {
+      return 4;
+    }
+    return 3;
   }
   let arr = [
     "zero",
@@ -108,7 +119,7 @@ function returnNumber(numberText, choice) {
     "nine",
   ];
   let index = arr.indexOf(numberText);
-  if (choice == 1) {
+  if (choice == 0) {
     index--;
   }
 
@@ -172,7 +183,9 @@ recognition.onresult = (e) => {
         );
       } else {
         for (let i = 0; i < logoText.length; i++) {
-          document.querySelector(".navbar-brand").innerHTML += logoText[i];
+          document.querySelector(
+            ".navbar-brand"
+          ).innerHTML += returnCapitalized(logoText[i]);
         }
         botSpeak("logo text added successfully");
       }
@@ -187,7 +200,9 @@ recognition.onresult = (e) => {
         navElements = parseInt(linksNumber);
       }
       if (linksNumber > 6 || linksNumber === 0) {
-        botSpeak("Sorry sir.Please provide minimum 1 or maximum 5 header links")
+        botSpeak(
+          "Sorry sir.Please provide minimum 1 or maximum 5 header links"
+        );
       }
       collapseNavBar = document.createElement("div");
       collapseNavBar.classList.add("collapse");
@@ -200,9 +215,11 @@ recognition.onresult = (e) => {
       }
       collapseNavBar.appendChild(navList);
       Navbar.appendChild(collapseNavBar);
+      botSpeak(`${navElements} header links added successfully`);
     }
     if (check("search") && check("bar")) {
       collapseNavBar.innerHTML += searchBar;
+      botSpeak("Search bar added successfully");
     }
   }
   //UPDATE HEADER
@@ -215,33 +232,48 @@ recognition.onresult = (e) => {
             "Sorry sir.Please provide logo text of minimum 1 word or maximum 2 words"
           );
         } else {
-          let logo = document.querySelector('.navbar-brand')
+          let logo = document.querySelector(".navbar-brand");
           let logoImg = document.createElement("img");
           logoImg.src = "../images/LogoImage.png";
           logoImg.setAttribute("height", logoImageSize);
           // logoImg.setAttribute("width", "50px");
-          logo.innerHTML = ""
+          logo.innerHTML = "";
           logo.appendChild(logoImg);
           for (let i = 0; i < logoText.length; i++) {
-            document.querySelector(".navbar-brand").innerHTML += logoText[i];
+            document.querySelector(
+              ".navbar-brand"
+            ).innerHTML += returnCapitalized(logoText[i]);
           }
           botSpeak("logo text added successfully");
         }
       }
-      if (check("header") && check("link")) {
+      if (check("header") && (check("link") || check("linked"))) {
         let linksNumber = speechResult[3];
+        let navLinks = document.querySelector(".navbar-nav").children.length;
         let navLinksNumber;
         if (isNaN(linksNumber)) {
-          navLinksNumber = returnNumber(linksNumber, 1);
+          navLinksNumber = returnNumber(linksNumber, 0);
         } else {
           navLinksNumber = parseInt(linksNumber);
-        }
-        if (linksNumber > 6 || linksNumber === 0) {
-          botSpeak("Sorry sir.Please provide minimum 1 or maximum 5 header links")
+          navLinksNumber--;
         }
 
+        if (navLinksNumber > navLinks || navLinksNumber < 0) {
+          botSpeak("Sorry sir Please provide header link number in range");
+          return;
+        }
+
+        document.querySelector(".navbar-nav").children[
+          navLinksNumber
+        ].children[0].innerText = returnCapitalized(
+          speechResult[speechResult.length - 1]
+        );
+        botSpeak(
+          `Header link ${linksNumber} changed to ${returnCapitalized(
+            speechResult[speechResult.length - 1]
+          )} successfully`
+        );
       }
     }
   }
-
 };
