@@ -27,8 +27,9 @@ let gender = "Sir";
 // let gender = "Mam";
 
 let Navbar,
-  logo,
-  isLogoAdded = false;
+  logo, logoImageSize = '80px';
+isLogoAdded = false;
+let collapseNavBar
 let collapseButton = `<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
 </button>
@@ -135,12 +136,14 @@ recognition.onresult = (e) => {
     if (check("create")) {
       Navbar = document.createElement("nav");
       Navbar.classList.add("navbar");
+      Navbar.classList.add("navbar-expand-lg");
 
       mainSection.appendChild(Navbar);
       let navName = check("header") ? "header" : "navbar";
       botSpeak(`${navName} created Successfully`);
     }
   }
+
   //  ADD BRAND LOGO
   if (check("add")) {
     if (check("logo") && check("brand") && speechResult.length === 3) {
@@ -153,7 +156,7 @@ recognition.onresult = (e) => {
       logo.classList.add("navbar-brand");
       let logoImg = document.createElement("img");
       logoImg.src = "../images/LogoImage.png";
-      logoImg.setAttribute("height", "80px");
+      logoImg.setAttribute("height", logoImageSize);
       // logoImg.setAttribute("width", "50px");
       logo.appendChild(logoImg);
       Navbar.appendChild(logo);
@@ -171,7 +174,6 @@ recognition.onresult = (e) => {
         for (let i = 0; i < logoText.length; i++) {
           document.querySelector(".navbar-brand").innerHTML += logoText[i];
         }
-        console.log(logo);
         botSpeak("logo text added successfully");
       }
       console.log(logoText);
@@ -184,7 +186,10 @@ recognition.onresult = (e) => {
       } else {
         navElements = parseInt(linksNumber);
       }
-      let collapseNavBar = document.createElement("div");
+      if (linksNumber > 6 || linksNumber === 0) {
+        botSpeak("Sorry sir.Please provide minimum 1 or maximum 5 header links")
+      }
+      collapseNavBar = document.createElement("div");
       collapseNavBar.classList.add("collapse");
       collapseNavBar.classList.add("navbar-collapse");
       let navList = document.createElement("ul");
@@ -200,4 +205,43 @@ recognition.onresult = (e) => {
       collapseNavBar.innerHTML += searchBar;
     }
   }
+  //UPDATE HEADER
+  if (check("change") || check("update") || check("modify")) {
+    if (check("header") || check("navbar")) {
+      if (check("logo") && check("text")) {
+        var logoText = speechResult.slice(5, speechResult.length);
+        if (logoText.length > 2 || logoText == 0) {
+          botSpeak(
+            "Sorry sir.Please provide logo text of minimum 1 word or maximum 2 words"
+          );
+        } else {
+          let logo = document.querySelector('.navbar-brand')
+          let logoImg = document.createElement("img");
+          logoImg.src = "../images/LogoImage.png";
+          logoImg.setAttribute("height", logoImageSize);
+          // logoImg.setAttribute("width", "50px");
+          logo.innerHTML = ""
+          logo.appendChild(logoImg);
+          for (let i = 0; i < logoText.length; i++) {
+            document.querySelector(".navbar-brand").innerHTML += logoText[i];
+          }
+          botSpeak("logo text added successfully");
+        }
+      }
+      if (check("header") && check("link")) {
+        let linksNumber = speechResult[3];
+        let navLinksNumber;
+        if (isNaN(linksNumber)) {
+          navLinksNumber = returnNumber(linksNumber, 1);
+        } else {
+          navLinksNumber = parseInt(linksNumber);
+        }
+        if (linksNumber > 6 || linksNumber === 0) {
+          botSpeak("Sorry sir.Please provide minimum 1 or maximum 5 header links")
+        }
+
+      }
+    }
+  }
+
 };

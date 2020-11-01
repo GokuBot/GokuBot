@@ -1,6 +1,7 @@
 * {
 
     box-sizing: border-box;
+    /* outline: 1px solid red; */
 }
 
 .container-fluid {
@@ -21,6 +22,16 @@
     padding: 0 60px !important;
     background-color: grey !important;
 }
+.navbar-brand {
+    font-size: 1.5rem !important; 
+
+}
+.navbar-collapse{
+    margin-left: 4rem;
+}
+.navbar-collapse li{
+    margin-left: 2rem;
+}
 
 .jumbotron {
     width: 70%;
@@ -30,7 +41,7 @@
     transform: translate(-50%, -50%);
     font-size: 2rem;
     color: white;
-    background: teal;
+    background: rgb(52, 2, 77);
     padding: 1rem 2rem;
     border-radius: 3rem;
     cursor: pointer;
