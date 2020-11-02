@@ -274,6 +274,13 @@ recognition.onresult = (e) => {
           )} successfully`
         );
       }
+      if (check("background")){
+        
+        let backgroundColour = speechResult.slice(4,speechResult.length ).join("")
+        
+        document.querySelector(".navbar").style.backgroundColor = backgroundColour
+        botSpeak(`header background changed to ${backgroundColour} successfully`)
+      }
     }
   }
 };

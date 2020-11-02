@@ -20,7 +20,7 @@
 .navbar {
     height: 100px;
     padding: 0 60px !important;
-    background-color: grey !important;
+    background-color: grey ;
 }
 
 .navbar-brand {
