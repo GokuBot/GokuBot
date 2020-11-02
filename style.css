@@ -2,6 +2,7 @@
   box-sizing: border-box;
   /* outline: 1px solid red; */
 }
+
 /* a {
   color: inherit !important ;
 } */
@@ -15,7 +16,9 @@
 .mainSection {
   height: 100vh;
   /* background-color: aqua; */
+  background-size: cover;
 }
+
 
 .navbar {
   height: 100px;

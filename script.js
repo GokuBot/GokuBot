@@ -132,7 +132,7 @@ recognition.onresult = (e) => {
   speech.text = str;
 
   speechResult = str.split(" ");
-  // STARTING COMMANDS
+  // STARTING
   if (check("hello")) {
     botSpeak(greetingMessage());
   }
@@ -140,7 +140,7 @@ recognition.onresult = (e) => {
     botSpeak(`Today is ${getCurrentDay()}`);
   }
 
-  //HEADER COMMANDS
+  //HEADER/NAVBAR  ------------------->
 
   // CREATE HEADER / NAVBAR
   if (check("header") || check("navbar")) {
@@ -170,7 +170,7 @@ recognition.onresult = (e) => {
       logoImg.setAttribute("height", logoImageSize);
       // logoImg.setAttribute("width", "50px");
       logo.appendChild(logoImg);
-      Navbar.appendChild(logo);
+      Navbar.insertBefore(logo, Navbar.firstChild);
       Navbar.innerHTML += collapseButton;
       botSpeak("Logo added Successfully");
     }
@@ -182,13 +182,11 @@ recognition.onresult = (e) => {
           "Sorry sir.Please provide logo text of minimum 1 word or maximum 2 words"
         );
       } else {
-        let logoP = document.createElement('span')
+        let logoP = document.createElement("span");
         for (let i = 0; i < logoText.length; i++) {
-
           logoP.innerText += returnCapitalized(logoText[i]);
         }
-        document.querySelector(
-          ".navbar-brand").appendChild(logoP)
+        document.querySelector(".navbar-brand").appendChild(logoP);
         botSpeak("logo text added successfully");
       }
       console.log(logoText);
@@ -249,7 +247,8 @@ recognition.onresult = (e) => {
           botSpeak("logo text added successfully");
         }
       }
-      if (check("header") && (check("link") || check("linked"))) {
+      if (check("colour") === false && (check("link") || check("linked"))) {
+        console.log(1);
         let linksNumber = speechResult[3];
         let navLinks = document.querySelector(".navbar-nav").children.length;
         let navLinksNumber;
@@ -277,20 +276,77 @@ recognition.onresult = (e) => {
         );
       }
       if (check("background")) {
+        let backgroundColour = speechResult
+          .slice(4, speechResult.length)
+          .join("");
 
-        let backgroundColour = speechResult.slice(4, speechResult.length).join("")
-
-        document.querySelector(".navbar").style.backgroundColor = backgroundColour
-        botSpeak(`header background changed to ${backgroundColour} successfully`)
+        document.querySelector(
+          ".navbar"
+        ).style.backgroundColor = backgroundColour;
+        botSpeak(
+          `header background changed to ${backgroundColour} successfully`
+        );
       }
       if (check("logo") && check("colour")) {
-        let colour = speechResult.slice(5, speechResult.length).join("")
-        document.querySelector(".navbar-brand").style.color = colour
-        console.log(colour)
-        console.log(document.querySelector(".navbar-brand").style)
-        botSpeak(`logo text colour change to ${colour} successfully`)
+        let colour = speechResult.slice(5, speechResult.length).join("");
+        document.querySelector(".navbar-brand").style.color = colour;
 
+        console.log(document.querySelector(".navbar-brand").style);
+        botSpeak(`logo text colour change to ${colour} successfully`);
+      }
+      if (check("links") && check("colour") && check("all")) {
+        let colour = speechResult.slice(6, speechResult.length).join("");
+        console.log(colour);
+        document.querySelectorAll(".nav-link").forEach((e) => {
+          e.style.color = colour;
+        });
+        botSpeak(`All Header links color  changed to ${colour} successfully`);
+      }
+      if (check("link") && check("colour")) {
+        let colour = speechResult.slice(6, speechResult.length).join("");
+        console.log(colour);
+        let linksNumber = speechResult[3];
+        let navLinks = document.querySelector(".navbar-nav").children.length;
+        let navLinksNumber;
+        if (isNaN(linksNumber)) {
+          navLinksNumber = returnNumber(linksNumber, 0);
+        } else {
+          navLinksNumber = parseInt(linksNumber);
+          navLinksNumber--;
+        }
+
+        if (navLinksNumber > navLinks || navLinksNumber < 0) {
+          botSpeak("Sorry sir Please provide header link number in range");
+          return;
+        }
+
+        document.querySelector(".navbar-nav").children[
+          navLinksNumber
+        ].children[0].style.color = colour;
+
+        botSpeak(
+          `Header link ${linksNumber} color  changed to ${colour} successfully`
+        );
       }
     }
   }
+  //END OF HEADER/NAVBAR  ------------------->
+  //HERO SECTION ------------------->
+
+  if (check("main")) {
+    if (check("background")) {
+      if (check("colour")) {
+        let bgColour = speechResult.slice(5, speechResult.length).join("");
+        mainSection.style.backgroundColor = bgColour;
+        botSpeak(`Main Background color changed to ${bgColour} successfully`);
+      }
+      if (check("image")) {
+        document.querySelector(".mainSection").style.backgroundImage =
+          "url(images/bg.jpg)";
+        botSpeak("Main background image changed successfully");
+      }
+    }
+  }
+
+  //END OF HERO ------------------->
 };
