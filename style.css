@@ -1,106 +1,95 @@
 * {
-
-    box-sizing: border-box;
-    /* outline: 1px solid red; */
+  box-sizing: border-box;
+  /* outline: 1px solid red; */
 }
+/* a {
+  color: inherit !important ;
+} */
 
 .container-fluid {
-    padding: 0 !important;
-    margin: 0 !important;
-
+  padding: 0 !important;
+  margin: 0 !important;
 }
-
 
 /* MAIN SECTION  */
 .mainSection {
-    height: 100vh;
-    /* background-color: aqua; */
+  height: 100vh;
+  /* background-color: aqua; */
 }
 
 .navbar {
-    height: 100px;
-    padding: 0 60px !important;
-    background-color: grey ;
+  height: 100px;
+  padding: 0 60px !important;
+  background-color: grey;
 }
 
 .navbar-brand {
-    font-size: 1.5rem !important;
-
+  font-size: 1.5rem !important;
 }
 
 .navbar-collapse {
-    margin-left: 4rem;
+  margin-left: 4rem;
 }
 
 .navbar-collapse li {
-    margin-left: 2rem;
+  margin-left: 2rem;
 }
 
 .jumbotron {
-    width: 70%;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    color: white;
-    background: rgb(52, 2, 77);
-    padding: 1rem 2rem;
-    border-radius: 3rem;
-    cursor: pointer;
-    transition: 0.3s ease-in-out;
-    outline: none;
-
+  width: 70%;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: white;
+  background: rgb(52, 2, 77);
+  padding: 1rem 2rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+  outline: none;
 }
 
 .hero {
-    height: 100vh;
-    background-size: cover;
-
+  height: 100vh;
+  background-size: cover;
 }
 
 .nav {
-    padding-top: 2rem;
-
+  padding-top: 2rem;
 }
 
 #speakBtn {
-    position: absolute;
-    bottom: 10%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    /* color: white; */
-    /* background: teal; */
-    padding: 1rem 3rem;
-    border-radius: 3rem;
-    cursor: pointer;
-    transition: all 0.3s ease-in-out;
-    outline: none !important;
-    border: none !important;
-    background-color: transparent;
-
-
-
+  position: absolute;
+  bottom: 10%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  /* color: white; */
+  /* background: teal; */
+  padding: 1rem 3rem;
+  border-radius: 3rem;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+  outline: none !important;
+  border: none !important;
+  background-color: transparent;
 }
 
 #speakBtn:hover {
-    background-color: black;
-    color: white;
-
+  background-color: black;
+  color: white;
 }
 
-
 #speakBtn i {
+  color: black;
+  font-size: 3rem;
 
-    color: black;
-    font-size: 3rem;
-
-    transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
 }
 
 #speakBtn:hover i {
-    font-size: 4rem;
-    color: #34B334;
-
+  font-size: 4rem;
+  color: #34b334;
 }

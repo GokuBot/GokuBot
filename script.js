@@ -182,11 +182,13 @@ recognition.onresult = (e) => {
           "Sorry sir.Please provide logo text of minimum 1 word or maximum 2 words"
         );
       } else {
+        let logoP = document.createElement('span')
         for (let i = 0; i < logoText.length; i++) {
-          document.querySelector(
-            ".navbar-brand"
-          ).innerHTML += returnCapitalized(logoText[i]);
+
+          logoP.innerText += returnCapitalized(logoText[i]);
         }
+        document.querySelector(
+          ".navbar-brand").appendChild(logoP)
         botSpeak("logo text added successfully");
       }
       console.log(logoText);
@@ -274,12 +276,20 @@ recognition.onresult = (e) => {
           )} successfully`
         );
       }
-      if (check("background")){
-        
-        let backgroundColour = speechResult.slice(4,speechResult.length ).join("")
-        
+      if (check("background")) {
+
+        let backgroundColour = speechResult.slice(4, speechResult.length).join("")
+
         document.querySelector(".navbar").style.backgroundColor = backgroundColour
         botSpeak(`header background changed to ${backgroundColour} successfully`)
+      }
+      if (check("logo") && check("colour")) {
+        let colour = speechResult.slice(5, speechResult.length).join("")
+        document.querySelector(".navbar-brand").style.color = colour
+        console.log(colour)
+        console.log(document.querySelector(".navbar-brand").style)
+        botSpeak(`logo text colour change to ${colour} successfully`)
+
       }
     }
   }

@@ -6,7 +6,7 @@ CREATE HEADER
 
 TODO 
 check ordering of logo and navlist 
-add multiWord colour functionality
+add multiWord colour functionality ✔
 
 UPDATE HEADER
 	CHANGE/MODIFY/UPDATE --
