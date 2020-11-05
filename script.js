@@ -27,7 +27,7 @@ let gender = "Sir";
 // let gender = "Mam";
 
 let Navbar,
-  logo,
+  logo, jumbotron,
   logoImageSize = "80px";
 isLogoAdded = false;
 let collapseNavBar;
@@ -128,10 +128,14 @@ function returnNumber(numberText, choice) {
 
 recognition.onresult = (e) => {
   const str = e.results[0][0]["transcript"];
-  console.log(str);
+  // console.log(str);
+
   speech.text = str;
 
   speechResult = str.split(" ");
+
+  speechResult = speechResult.toLocaleString().toLowerCase().split(',');
+  console.log(speechResult);
   // STARTING
   if (check("hello")) {
     botSpeak(greetingMessage());
@@ -334,6 +338,14 @@ recognition.onresult = (e) => {
   //HERO SECTION ------------------->
 
   if (check("main")) {
+    if (check("create")) {
+      if (check("title") && check("section")) {
+        jumbotron = document.createElement("div")
+        jumbotron.classList.add("jumbotron")
+        document.querySelector('.mainSection').appendChild(jumbotron)
+        botSpeak("main title section created")
+      }
+    }
     if (check("background")) {
       if (check("colour")) {
         let bgColour = speechResult.slice(5, speechResult.length).join("");
@@ -346,7 +358,28 @@ recognition.onresult = (e) => {
         botSpeak("Main background image changed successfully");
       }
     }
+
+    if (check("add")) {
+
+      if (check("title") && check("heading")) {
+        let heading = document.createElement("h1")
+        let headingArray = speechResult.slice(6, speechResult.length)
+        headingArray.forEach(headingText => {
+
+          heading.innerText += returnCapitalized(headingText)
+          heading.innerText += " "
+
+        })
+        document.querySelector('.jumbotron').appendChild(heading)
+        botSpeak("main title section heading added successfully")
+      }
+    }
+    // if(check("update")||check("modify")||check("change")){
+    //   if(check("title")&&check(""))
+    // }
+
   }
+
 
   //END OF HERO ------------------->
 };

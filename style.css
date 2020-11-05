@@ -19,7 +19,6 @@
   background-size: cover;
 }
 
-
 .navbar {
   height: 100px;
   padding: 0 60px !important;
@@ -61,6 +60,12 @@
 
 .nav {
   padding-top: 2rem;
+}
+.jumbotron {
+  height: 200px;
+  /* width: 100%; */
+  background-color: transparent !important;
+  text-align: center;
 }
 
 #speakBtn {
