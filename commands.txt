@@ -9,6 +9,7 @@ check ordering of logo and navlist
 add multiWord colour functionality ✔
 update logo image with sample logos
 Responsive Navbar links
+function to fetch data after AS in slicing
 
 UPDATE HEADER
 	CHANGE/MODIFY/UPDATE --
@@ -46,10 +47,11 @@ CREATE HERO SECTION
 ADD
 	BACKGROUND COLOR
 	BACKGROUND IMAGE
-    TITLE HEADING AS "CLG WEBSITE"
+    ADD MAIN TITLE HEADING AS "CLG WEBSITE"
 
 UPDATE
-	BACKGROUND
+	MAIN TITLE SECTION BACKGROUND COLOR TO "BLACK"
+	MAIN TITLE SECTION HEADING COLOR TO "BLACK"
 	HEADING TEXT "lorem"
 	SUB HEADING / PARAGRAPH TEXT
 

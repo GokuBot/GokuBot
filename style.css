@@ -22,7 +22,7 @@
 .navbar {
   height: 100px;
   padding: 0 60px !important;
-  background-color: grey;
+  background-color: lightblue;
 }
 
 .navbar-brand {
@@ -37,7 +37,7 @@
   margin-left: 2rem;
 }
 
-.jumbotron {
+.jumbotron1 {
   width: 70%;
   position: absolute;
   top: 50%;
@@ -45,12 +45,18 @@
   transform: translate(-50%, -50%);
   font-size: 2rem;
   color: white;
-  background: rgb(52, 2, 77);
-  padding: 1rem 2rem;
-  border-radius: 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* padding: 1rem 2rem; */
+  /* border-radius: 3rem; */
   cursor: pointer;
   transition: 0.3s ease-in-out;
   outline: none;
+  height: 200px;
+  /* width: 100%; */
+  background-color: lightblue;
+  text-align: center;
 }
 
 .hero {
@@ -61,12 +67,7 @@
 .nav {
   padding-top: 2rem;
 }
-.jumbotron {
-  height: 200px;
-  /* width: 100%; */
-  background-color: transparent !important;
-  text-align: center;
-}
+
 
 #speakBtn {
   position: absolute;

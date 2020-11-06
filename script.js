@@ -27,9 +27,19 @@ let gender = "Sir";
 // let gender = "Mam";
 
 let Navbar,
-  logo, jumbotron,
+  logo,
+  jumbotron1,
   logoImageSize = "80px";
 isLogoAdded = false;
+
+let defaultNavLinks = [
+  "Home",
+  "Explore",
+  "Features",
+  "Testimonials",
+  "Contact",
+  "About us ",
+];
 let collapseNavBar;
 let collapseButton = `<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 <span class="navbar-toggler-icon"></span>
@@ -134,7 +144,7 @@ recognition.onresult = (e) => {
 
   speechResult = str.split(" ");
 
-  speechResult = speechResult.toLocaleString().toLowerCase().split(',');
+  speechResult = speechResult.toLocaleString().toLowerCase().split(",");
   console.log(speechResult);
   // STARTING
   if (check("hello")) {
@@ -216,6 +226,7 @@ recognition.onresult = (e) => {
       navList.classList.add("mr-auto");
       for (let i = 0; i < navElements; i++) {
         navList.innerHTML += navLink;
+        navList.children[i].innerText = defaultNavLinks[i];
       }
       collapseNavBar.appendChild(navList);
       Navbar.appendChild(collapseNavBar);
@@ -340,16 +351,16 @@ recognition.onresult = (e) => {
   if (check("main")) {
     if (check("create")) {
       if (check("title") && check("section")) {
-        jumbotron = document.createElement("div")
-        jumbotron.classList.add("jumbotron")
-        document.querySelector('.mainSection').appendChild(jumbotron)
-        botSpeak("main title section created")
+        jumbotron1 = document.createElement("div");
+        jumbotron1.classList.add("jumbotron1");
+        document.querySelector(".mainSection").appendChild(jumbotron1);
+        botSpeak("main title section created");
       }
     }
-    if (check("background")) {
+    if (check("background") && check("title") == false) {
       if (check("colour")) {
         let bgColour = speechResult.slice(5, speechResult.length).join("");
-        mainSection.style.backgroundColor = bgColour;
+        document.querySelector(".mainSection").style.backgroundColor = bgColour;
         botSpeak(`Main Background color changed to ${bgColour} successfully`);
       }
       if (check("image")) {
@@ -360,26 +371,41 @@ recognition.onresult = (e) => {
     }
 
     if (check("add")) {
-
       if (check("title") && check("heading")) {
-        let heading = document.createElement("h1")
-        let headingArray = speechResult.slice(6, speechResult.length)
-        headingArray.forEach(headingText => {
-
-          heading.innerText += returnCapitalized(headingText)
-          heading.innerText += " "
-
-        })
-        document.querySelector('.jumbotron').appendChild(heading)
-        botSpeak("main title section heading added successfully")
+        let heading = document.createElement("h1");
+        let headingArray = speechResult.slice(5, speechResult.length);
+        headingArray.forEach((headingText) => {
+          heading.innerText += returnCapitalized(headingText);
+          heading.innerText += " ";
+        });
+        document.querySelector(".jumbotron1").appendChild(heading);
+        botSpeak("main title section heading added successfully");
       }
     }
-    // if(check("update")||check("modify")||check("change")){
-    //   if(check("title")&&check(""))
-    // }
 
+    if (check("update") || check("modify") || check("change")) {
+      if (check("title") && check("section") && check("colour")) {
+        if (check("background")) {
+          let bgcolor = speechResult.slice(7, speechResult.length).join("");
+          console.log(bgcolor);
+          document.querySelector(".jumbotron1").style.backgroundColor = bgcolor;
+          botSpeak(
+            `main title heading background changed to ${bgcolor} successfully`
+          );
+        }
+        if (check("heading")) {
+          let headingColor = speechResult
+            .slice(7, speechResult.length)
+            .join("");
+          console.log(headingColor);
+          document.querySelector(".jumbotron1 h1").style.color = headingColor;
+          botSpeak(
+            `main title heading color changed to ${headingColor} successfully`
+          );
+        }
+      }
+    }
   }
-
 
   //END OF HERO ------------------->
 };
