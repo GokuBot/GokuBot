@@ -54,6 +54,13 @@ let searchBar = `
   <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
   <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 </form>`;
+let articleHeadText = `The 2021 FullStack Web Developer RoadMap`;
+let articleParaText = `Hello Guys, if you want to learn to code or to become a Web Developer in 2021 then you have come to the right place. Earlier, I have shared 20 websites to learn coding and the best web development courses and
+today I have something special to share with you, the complete Full-stack Web Developer RoadMap. This is an excellent illustration of how to become a full-stack web developer in 2021 and guide you on how
+you can learn and master Web Development in 2021.It’s a collection of different paths to learning front-end, back-end, and full-stack, including all other
+things a Web developer should know. You will not just know about web development but about essential programming stuff which is important for all kinds of programmers.
+The RoadMap is also divided into 3 sections, the first section is about essential skills which every web developer should know, while the second and third section is about front-end and back-end development, two main areas of web development.
+`;
 let mainSection = document.querySelector(".mainSection");
 
 // random greeting message returns
@@ -404,8 +411,46 @@ recognition.onresult = (e) => {
           );
         }
       }
+      if (check("heading") && check("text")) {
+        console.log(1);
+        let headingText = document.querySelector(".jumbotron1 h1");
+
+        let newText = speechResult.slice(5, speechResult.length).join(" ");
+        headingText.innerText = newText;
+      }
     }
   }
 
   //END OF HERO ------------------->
+  // START OF ARTICLE SECTION ------------------->
+  if (check("add") && check("article")) {
+    {
+      if (check("image")) {
+        let left = document.createElement("div");
+
+        left.classList.add("left");
+        let ArticleImage = document.createElement("img");
+        ArticleImage.src = "../images/ArticleImage.jpg";
+        left.appendChild(ArticleImage);
+        document.querySelector(".gridSection").appendChild(left);
+      }
+      if (check("text")) {
+        let articleHeading = document.createElement("h2");
+        articleHeading.innerText = articleHeadText;
+
+        let articlePara = document.createElement("p");
+        articlePara.innerText = articleParaText;
+        let right = document.createElement("div");
+        let articleText = document.createElement("div");
+        articleText.classList.add("articleText");
+        right.classList.add("right");
+        articleText.appendChild(articleHeading);
+        articleText.appendChild(articlePara);
+        right.appendChild(articleText);
+        document.querySelector(".gridSection").appendChild(right);
+      }
+    }
+  }
+
+  // END OF ARTICLE SECTION ------------------->
 };

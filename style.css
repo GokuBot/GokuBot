@@ -59,6 +59,10 @@
   text-align: center;
 }
 
+.jumbotron1 h1 {
+  font-size: 4rem;
+}
+
 .hero {
   height: 100vh;
   background-size: cover;
@@ -70,7 +74,7 @@
 
 
 #speakBtn {
-  position: absolute;
+  position: fixed;
   bottom: 10%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -101,4 +105,57 @@
 #speakBtn:hover i {
   font-size: 4rem;
   color: #34b334;
+}
+
+.gridSection {
+  height: 100vh;
+  display: flex;
+
+  /* background-color: antiquewhite; */
+}
+
+.left {
+  width: 50%;
+
+  object-fit: cover;
+  position: relative;
+}
+
+.left img {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  max-width: 90%;
+  max-height: 90%;
+
+}
+
+
+.right {
+  width: 50%;
+
+  /* background-color: aqua; */
+}
+
+.articleText {
+  padding-top: 2rem;
+  padding-left: 2.2rem;
+  padding-right: 2.2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.articleText h2 {
+  text-align: center;
+  font-size: 2.2rem;
+  margin-bottom: 2rem;
+  font-weight: bold;
+}
+
+.articleText p {
+  font-size: 1.1rem;
+  line-height: 2rem;
 }
