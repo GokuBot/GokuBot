@@ -316,15 +316,19 @@ recognition.onresult = (e) => {
         console.log(document.querySelector(".navbar-brand").style);
         botSpeak(`logo text colour change to ${colour} successfully`);
       }
-      if (check("links") && check("colour") && check("all")) {
+      if (
+        (check("link") || check("links")) &&
+        check("colour") &&
+        check("all")
+      ) {
         let colour = speechResult.slice(6, speechResult.length).join("");
-        console.log(colour);
+
         document.querySelectorAll(".nav-link").forEach((e) => {
           e.style.color = colour;
         });
         botSpeak(`All Header links color  changed to ${colour} successfully`);
       }
-      if (check("link") && check("colour")) {
+      if (check("link") && check("colour") && check("all") == false) {
         let colour = speechResult.slice(6, speechResult.length).join("");
         console.log(colour);
         let linksNumber = speechResult[3];
@@ -432,7 +436,7 @@ recognition.onresult = (e) => {
         let ArticleImage = document.createElement("img");
         ArticleImage.src = "../images/ArticleImage.jpg";
         left.appendChild(ArticleImage);
-        document.querySelector(".gridSection").appendChild(left);
+        document.querySelector(".Article").appendChild(left);
       }
       if (check("text")) {
         let articleHeading = document.createElement("h2");
@@ -447,10 +451,16 @@ recognition.onresult = (e) => {
         articleText.appendChild(articleHeading);
         articleText.appendChild(articlePara);
         right.appendChild(articleText);
-        document.querySelector(".gridSection").appendChild(right);
+        document.querySelector(".Article").appendChild(right);
       }
     }
   }
 
   // END OF ARTICLE SECTION ------------------->
+  // START OF PHOTOGRID SECTION ------------------->
+  if (check("add") && check("grid")) {
+    console.log(1);
+    document.querySelector(".photoGrid").classList.remove("hide");
+  }
+  // END OF PHOTOGRID SECTION ------------------->
 };
